@@ -49,7 +49,8 @@ export const fetchCartData = () => {
 };
 
 export const sendData = (task) => {
-  return (dispatch) => {
+  return async (dispatch) => {
+    dispatch(taskActions.addTask(task));
     var myHeaders = new Headers();
     myHeaders.append(
       "Authorization",
@@ -69,15 +70,15 @@ export const sendData = (task) => {
       redirect: "follow",
     };
 
-    fetch("http://185.126.200.101:4005/tasks", requestOptions)
+    await fetch("http://185.126.200.101:4005/tasks", requestOptions)
       .then((response) => response.text())
       .then((result) => console.log(result))
       .catch((error) => console.log("error", error));
-    dispatch(taskActions.addTask(task));
   };
 };
 export const deleteTask = (id) => {
-  return (dispatch) => {
+  return async (dispatch) => {
+    dispatch(taskActions.deleteTask(id));
     var myHeaders = new Headers();
     myHeaders.append(
       "Authorization",
@@ -90,15 +91,15 @@ export const deleteTask = (id) => {
       redirect: "follow",
     };
 
-    fetch(`http://185.126.200.101:4005/tasks/${id}`, requestOptions)
+    await fetch(`http://185.126.200.101:4005/tasks/${id}`, requestOptions)
       .then((response) => response.text())
       .then((result) => console.log(result))
       .catch((error) => console.log("error", error));
-    dispatch(taskActions.deleteTask(id));
   };
 };
 export const updateTask = (task) => {
-  return (dispatch) => {
+  return async (dispatch) => {
+    dispatch(taskActions.updateTask(task._id));
     var myHeaders = new Headers();
     myHeaders.append(
       "Authorization",
@@ -118,10 +119,9 @@ export const updateTask = (task) => {
       redirect: "follow",
     };
 
-    fetch(`http://185.126.200.101:4005/tasks/${task._id}`, requestOptions)
+    await fetch(`http://185.126.200.101:4005/tasks/${task._id}`, requestOptions)
       .then((response) => response.text())
       .then((result) => console.log(result))
       .catch((error) => console.log("error", error));
-    dispatch(taskActions.updateTask(task._id));
   };
 };
